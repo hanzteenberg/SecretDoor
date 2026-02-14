@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy valentine</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+min-height:100vh;
+font-family:Georgia,serif;
+background:linear-gradient(135deg,#ff4fa3,#c9186a);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px
+}
+
+.frame{
+background:#fff;
+border-radius:30px;
+padding:30px;
+width:100%;
+max-width:1000px;
+box-shadow:0 20px 60px rgba(0,0,0,.35)
+}
+
+.header{
+text-align:center;
+margin-bottom:25px
+}
+.header h1{
+font-family: 'Great Vibes', cursive;
+color:#d63384;
+font-size:3em;
+letter-spacing:1px
+}
+
+.selector{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px
+}
+.envelope-box{
+text-align:center
+}
+.envelope-choice{
+height:150px;
+background:#c2185b;
+border-radius:18px;
+position:relative;
+cursor:pointer;
+box-shadow:0 15px 35px rgba(0,0,0,.35);
+transition:.4s
+}
+.envelope-choice::before{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(135deg,#cc104f,#640830);
+clip-path:polygon(0 0,50% 50%,100% 0,100% 100%,0 100%);
+border-radius:18px
+}
+.envelope-choice:hover{
+transform:translateY(-8px) scale(1.03)
+}
+.envelope-label{
+font-family: 'Satisfy', cursive;
+margin-top:10px;
+color:#ad1457;
+font-weight:bold;
+font-size: 1.4em;
+}
+
+.letter{
+display:none;
+background:#fff0f6;
+border-radius:25px;
+padding:30px;
+box-shadow:0 20px 50px rgba(0,0,0,.3);
+animation:openLetter .8s ease;
+position:relative
+}
+@keyframes openLetter{
+from{transform:scale(.8);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+.letter h1{
+text-align:center;
+color:#c2185b;
+margin-bottom:20px
+}
+.section{
+display:flex;
+align-items:center;
+gap:20px;
+margin-bottom:25px
+}
+
+.section.reverse{flex-direction:row-reverse}
+.section img{
+width:180px;
+border-radius:15px;
+object-fit:cover
+}
+.section p{
+flex:1;
+font-style:italic;
+color:#6a1b9a;
+line-height:1.7
+}
+
+.heart{
+position:fixed;
+font-size:22px;
+animation:float 2s ease-out forwards;
+pointer-events:none;
+z-index:5
+}
+@keyframes float{
+0%{transform:translateY(0) scale(.6);opacity:1}
+100%{transform:translateY(-120px) scale(1.2);opacity:0}
+}
+
+.toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#fff;
+color:#ad1457;
+padding:14px 20px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+display:flex;
+align-items:center;
+gap:10px;
+font-family:system-ui,sans-serif;
+animation:slideIn .4s ease, fadeOut .4s ease 3s forwards;
+z-index:20
+}
+@keyframes slideIn{
+from{transform:translateX(120%);opacity:0}
+to{transform:translateX(0);opacity:1}
+}
+@keyframes fadeOut{
+to{opacity:0;transform:translateX(120%)}
+}
+
+.actions{text-align:center;margin-top:20px}
+.actions button{
+padding:10px 25px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+background:#f8bbd0;
+color:#880e4f;
+font-weight:bold
+}
+
+@media(max-width:600px){
+.section,.section.reverse{flex-direction:column}
+.section img{width:100%}
+}
+
+.fullscreen-btn{
+position: fixed;
+top:15px;
+left:15px;
+padding:8px 14px;
+border:none;
+border-radius:20px;
+background:#fff;
+color:#c2185b;
+font-size:14px;
+cursor:pointer;
+z-index:50;
+box-shadow:0 6px 20px rgba(0,0,0,.25)
+}
+
+.startup{
+position:fixed;
+inset:0;
+background:linear-gradient(135deg,#ff4fa3,#c9186a);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:100;
+transition:.6s ease
+}
+.startup.hide{
+opacity:0;
+pointer-events:none
+}
+.startup-envelope{
+width:300px;
+height:190px;
+background:#c2185b;
+border-radius:0 0 20px 20px;
+position:relative;
+cursor:pointer;
+box-shadow:0 20px 45px rgba(0,0,0,.4)
+}
+.startup-envelope::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:150px solid transparent;
+border-right:150px solid transparent;
+border-top:95px solid #ad1457;
+transform-origin:top;
+transition:.8s ease
+}
+.startup-envelope.open::before{
+transform:rotateX(180deg)
+}
+.startup-text{
+position:absolute;
+bottom:-45px;
+width:100%;
+text-align:center;
+color:#fff;
+font-family:'Great Vibes',cursive;
+font-size:2em;
+opacity:.9
+}
+.valentine-paper{
+position:fixed;
+inset:0;
+background:linear-gradient(135deg,#cc104f,#640830);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:90;
+opacity:0;
+pointer-events:none;
+transition:.6s ease
+}
+.valentine-paper.show{
+opacity:1;
+pointer-events:auto
+}
+.paper{
+background:#fff;
+border-radius:25px;
+padding:30px;
+max-width:420px;
+width:100%;
+text-align:center;
+box-shadow:0 20px 50px rgba(0,0,0,.35)
+}
+.paper h1{
+font-family:'Great Vibes',cursive;
+font-size:3em;
+color:#c2185b;
+margin-bottom:20px
+}
+.paper-photos{
+display:flex;
+gap:15px;
+justify-content:center;
+margin-bottom:20px;
+size: 2cm;
+}
+.paper-photos img{
+width:45%;
+border-radius:15px;
+object-fit:cover
+}
+.paper p{
+font-family:'Dancing Script',cursive;
+font-size:1.8em;
+color:#ad1457;
+margin-bottom:20px
+}
+.paper button{
+padding:10px 30px;
+border:none;
+border-radius:25px;
+background:#f8bbd0;
+color:#880e4f;
+font-weight:bold;
+cursor:pointer
+}
+
+.paper-exit{
+animation:paperOut 1.2s cubic-bezier(.25,1.4,.4,1) forwards
+}
+@keyframes paperOut{
+0%{transform:translateY(120px) scale(.7);opacity:0}
+60%{transform:translateY(-20px) scale(1.05);opacity:1}
+100%{transform:translateY(0) scale(1)}
+}
+
+.paper{
+max-width:760px;
+}
+
+.paper-photos img:first-child{
+transform:rotate(-4deg)
+}
+.paper-photos img:last-child{
+transform:rotate(4deg)
+}
+
+.edge-heart{
+position:fixed;
+font-size:20px;
+opacity:.6;
+animation:edgeFloat 3s linear infinite;
+pointer-events:none;
+z-index:95
+}
+@keyframes edgeFloat{
+0%{transform:translateY(0);opacity:.2}
+100%{transform:translateY(-80px);opacity:0}
+}
+
+.letter.paper1{
+background:#fff;
+transform:rotate(-3deg);
+border:8px solid #ffe4ec;
+position:relative;
+animation:slideOut .8s ease;
+}
+
+@keyframes slideOut{
+from{transform:translateY(60px) rotate(-8deg);opacity:0}
+to{transform:translateY(0) rotate(-3deg);opacity:1}
+}
+
+.flower{
+position:absolute;
+font-size:22px;
+animation:flowerFloat 6s linear infinite;
+opacity:.7;
+pointer-events:none;
+}
+
+@keyframes flowerFloat{
+0%{transform:translateY(0);opacity:.6}
+100%{transform:translateY(-120px);opacity:0}
+}
+
+.letter.paper2{
+background:#fffdf6;
+border-left:10px solid #ff80ab;
+padding-top:40px;
+}
+
+.diary-title{
+font-family:'Dancing Script',cursive;
+font-size:2.5em;
+color:#d63384;
+margin-bottom:15px;
+text-align:center;
+}
+
+.diary-photos{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-bottom:20px;
+}
+
+.diary-photos img{
+width:100%;
+border-radius:12px;
+transform:rotate(-3deg);
+box-shadow:0 10px 20px rgba(0,0,0,.2);
+}
+
+.diary-photos img:nth-child(2){
+transform:rotate(4deg);
+}
+.diary-photos img:nth-child(3){
+transform:rotate(3deg);
+}
+.diary-photos img:nth-child(4){
+transform:rotate(-4deg);
+}
+
+.letter.paper3{
+background:#f3e5f5;
+text-align:center;
+}
+
+.map-box{
+position:relative;
+display:inline-block;
+}
+
+.map-box img{
+width:100%;
+max-width:500px;
+border-radius:20px;
+}
+
+.map-heart{
+position:absolute;
+font-size:28px;
+color:red;
+cursor:pointer;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+.photobox{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+justify-content:center;
+margin:20px 0 30px;
+}
+
+.photobox img{
+width:120px;
+height:150px;
+object-fit:cover;
+background:#fff;
+padding:6px;
+border-radius:8px;
+box-shadow:0 8px 20px rgba(0,0,0,.25);
+transform:rotate(-3deg);
+}
+
+.photobox img:nth-child(2){transform:rotate(4deg)}
+.photobox img:nth-child(3){transform:rotate(-6deg)}
+.photobox img:nth-child(4){transform:rotate(5deg)}
+
+.paper2 p{
+font-style:italic;
+color:#6a1b9a;
+line-height:1.9;
+margin-bottom:15px;
+font-size:1.05em;
+}
+
+#particleText{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:1;
+}
+
+.frame{
+position:relative;
+z-index:5;
+}
+
+@keyframes heartBeat {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.08); }
+  40%  { transform: scale(1); }
+  60%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.heart-pulse {
+  animation: heartBeat 1.5s infinite;
+}
+</style>
+</head>
+
+<body>
+
+  <div class="startup" id="startup">
+    <div class="startup-envelope" onclick="openStartup()">
+      <div class="startup-text">Tap to Open 💌</div>
+    </div>
+  </div>
+
+  <div class="valentine-paper" id="paper">
+  <div class="paper paper-exit">
+    <h1>Happy Valentine 💕</h1>
+
+  <div class="paper-photos">
+
+  <div class="main-photos">
+    <img src="foto1.jpg" class="main-photo">
+    <img src="foto2.jpg" class="main-photo">
+  </div>
+
+</div>
+
+
+
+    <p>Happy February</p>
+
+    <button onclick="enterMain()">Lanjut 💌</button>
+  </div>
+  </div>
+
+  <button class="fullscreen-btn" onclick="goFull()">⛶ Fullscreen</button>
+
+<canvas id="particleText"></canvas>
+
+  <div class="frame">
+
+  <div class="header">
+    <h1>Choose Your Envelopes 💌</h1>
+  </div>
+
+  <div class="selector" id="selector">
+  <div class="envelope-box">
+    <div class="envelope-choice" onclick="openEnvelope(1)"></div>
+    <div class="envelope-label">Envelope 1</div>
+  </div>
+  <div class="envelope-box">
+    <div class="envelope-choice" onclick="openEnvelope(2)"></div>
+    <div class="envelope-label">Envelope 2</div>
+  </div>
+  <div class="envelope-box">
+    <div class="envelope-choice" onclick="openEnvelope(3)"></div>
+    <div class="envelope-label">Envelope 3</div>
+  </div>
+</div>
+
+<div class="letter" id="letter">
+  <h1 id="title"></h1>
+
+  <div class="section">
+    <p id="p1"></p>
+    <img id="img1">
+  </div>
+
+  <div class="section reverse">
+    <p id="p2"></p>
+    <img id="img2">
+  </div>
+
+  <div class="actions">
+    <button onclick="back()">⬅ Kembali</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const selector=document.getElementById('selector')
+const letter=document.getElementById('letter')
+const PASSWORD="iloveyou"
+
+let openedEnvelopes={1:false,2:false,3:false}
+
+const data={
+1:{
+title:"Selamat Hari Valentine, Wili 🤍",
+p1:"Di antara banyaknya orang di dunia ini, aku bersyukur bisa mengenal kamu. Kamu bukan cuma orang favoritku, tapi juga alasan kenapa hari-hariku terasa lebih hangat dan bermakna.",
+img1:"imgk3.jpg",
+p2:"Terima kasih sudah jadi Wili yang selalu bikin aku nyaman, yang senyumnya bisa mengubah suasana hatiku dalam sekejap. Kehadiran kamu itu sederhana, tapi efeknya luar biasa buat aku. Kalau hari ini tentang kasih sayang, aku cuma mau kamu tahu… perasaanku ke kamu tulus dan terus bertumbuh. Semoga kita bisa terus berbagi cerita, tawa, dan momen-momen kecil yang suatu hari nanti jadi kenangan indah.",
+img2:"imgk4.jpg"
+},
+2:{
+title:"💖 Tentang Kita",
+p1:"let gw ga dapetin dia if gw bundir else gw ewe",
+img1:"img1p2.jpg",
+p2:"let gw dapetin dia if gw entot else gw gigit pipinya",
+img2:"img2p2.jpg"
+},
+3:{
+title:"💞 Tentang Hubungan Kita",
+p1:"Tapi kayaknya mustahil",
+img1:"img1p3.jpg",
+p2:"Ah capek ah",
+img2:"img2p3.jpg"
+}
+}
+
+function openEnvelope(n){
+
+openedEnvelopes[n] = true
+
+selector.style.display="none"
+letter.style.display="block"
+letter.className="letter"
+
+spawnHearts()
+spawnFlowers()
+
+if(n===1){
+letter.classList.add("paper1")
+
+letter.innerHTML=`
+<h1>My Dearest</h1>
+<p style="text-align:center;font-style:italic;color:#ad1457">
+I want all of u
+</p>
+
+<div class="section">
+<p>
+Aku hanya ingin mengungkapkan rasa syukurku yang tulus karena kamu menjadi dirimu yang begitu unik. Aku rasa kamu mungkin belum sepenuhnya menyadari betapa besar arti kehadiranmu bagiku. Cara kamu berbicara, cara kamu mendengarkan, bahkan momen-momen hening yang kita bagi bersama memiliki makna yang sangat besar. Kamu memiliki ketenangan dan ketulusan yang membuat semua orang merasa nyaman, dan aku benar-benar mengagumi itu tentang dirimu. Kamu tidak memaksakan diri, juga tidak berpura-pura menjadi seseorang yang bukan dirimu. Itu adalah kualitas yang langka, dan sesuatu yang sangat aku kagumi.
+</p>
+<img src="img1.jpg">
+</div>
+
+<div class="section reverse">
+<p>
+Aku menghargai setiap momen, setiap percakapan, dan setiap interaksi kecil yang kita bagi. Masing-masing meninggalkan jejak yang tak terhapuskan di hatiku, mewarnainya dengan kebahagiaan dan rasa syukur. Tawamu seperti melodi yang menerangi hariku, dan senyummu adalah cahaya penuntun yang membimbingku melewati masa-masa paling sulit sekalipun.
+</p>
+<img src="img2.jpg">
+</div>
+
+<div class="section">
+<p>
+Saat kita melanjutkan perjalanan indah ini bersama, aku ingin kamu tahu bahwa kamu dicintai tanpa batas. Kamu adalah sandaranku dan inspirasiku, dan aku selamanya bersyukur atas cinta yang kita miliki. Terima kasih telah menjadi pasanganku, tempatku berbagi cerita, dan sahabat terbaikku. Dengan segenap cintaku,
+</p>
+<img src="img3.jpg">
+</div>
+<div class="actions">
+<button onclick="back()">⬅ Kembali</button>
+</div>
+`
+}
+
+if(n===2){
+letter.classList.add("paper2")
+
+letter.innerHTML=`
+<div class="diary-title">Selamat Hari Valentine, Wili 🤍</div>
+
+<div class="photobox">
+    <img src="img4.jpg">
+    <img src="img5.jpg">
+    <img src="img6.jpg">
+    <img src="img7.jpg">
+</div>
+
+<p>
+Di antara banyaknya orang di dunia ini, aku bersyukur bisa mengenal kamu. Kamu bukan cuma orang favoritku, tapi juga alasan kenapa hari-hariku terasa lebih hangat dan bermakna.
+</p>
+
+<p>
+Terima kasih sudah jadi Wili yang selalu bikin aku nyaman, yang senyumnya bisa mengubah suasana hatiku dalam sekejap. Kehadiran kamu itu sederhana, tapi efeknya luar biasa buat aku.
+</p>
+
+<p>
+Kalau hari ini tentang kasih sayang, aku cuma mau kamu tahu… perasaanku ke kamu tulus dan terus bertumbuh. Semoga kita bisa terus berbagi cerita, tawa, dan momen-momen kecil yang suatu hari nanti jadi kenangan indah.
+</p>
+
+<p>
+Happy Valentine’s Day, orang favoritku ❤️
+— Dari seseorang yang selalu menyayangimu ✨
+</p>
+
+<div class="actions">
+<button onclick="back()">⬅ Kembali</button>
+</div>
+`
+}
+
+
+if(n===3){
+letter.classList.add("paper3")
+
+letter.innerHTML=`
+<h1>Tempat Pertama Kita Bertemu 💞</h1>
+
+<div class="map-box">
+  <img src="map.jpg" alt="First Meet Location">
+  <div class="map-heart"
+    style="top:48%;left:50%;"
+    onclick="openMaps()">💗</div>
+</div>
+
+<p>Klik love nya yaa</p>
+
+<div class="actions">
+<button onclick="back()">⬅ Kembali</button>
+</div>
+`
+}
+
+if(openedEnvelopes[1] && openedEnvelopes[2] && openedEnvelopes[3]){
+  setTimeout(()=>{
+    particleWrap.style.display="block"
+    showHeartParticles()
+  }, 800)
+}
+
+}
+
+
+function back(){
+letter.style.display="none"
+selector.style.display="grid"
+}
+
+function spawnHearts(){
+for(let i=0;i<12;i++){
+setTimeout(()=>{
+const h=document.createElement('div')
+h.className='heart'
+h.innerText=['💖','💕','💗','❤️','💘'][Math.floor(Math.random()*5)]
+h.style.left=Math.random()*100+'%'
+h.style.bottom='20px'
+document.body.appendChild(h)
+setTimeout(()=>h.remove(),2000)
+},i*120)
+}
+}
+
+function showToast(text){
+const toast=document.createElement('div')
+toast.className='toast'
+toast.innerHTML=`💞 ${text}`
+document.body.appendChild(toast)
+setTimeout(()=>toast.remove(),3500)
+}
+
+function goFull(){
+const el=document.documentElement
+if(el.requestFullscreen){
+el.requestFullscreen()
+}else if(el.webkitRequestFullscreen){
+el.webkitRequestFullscreen()
+}
+}
+
+function openStartup(){
+const env=document.querySelector('.startup-envelope')
+env.classList.add('open')
+spawnHearts()
+
+setTimeout(()=>{
+document.getElementById('startup').classList.add('hide')
+},1200)
+}
+
+function openStartup(){
+const env=document.querySelector('.startup-envelope')
+env.classList.add('open')
+spawnHearts()
+
+setTimeout(()=>{
+document.getElementById('startup').classList.add('hide')
+document.getElementById('paper').classList.add('show')
+},1200)
+}
+
+function enterMain(){
+document.getElementById('paper').classList.remove('show')
+}
+
+function spawnEdgeHearts(){
+for(let i=0;i<14;i++){
+const h=document.createElement('div')
+h.className='edge-heart'
+h.innerText=['💖','💕','💗','❤️'][Math.floor(Math.random()*4)]
+h.style.left=Math.random()>0.5?'5px':'calc(100% - 25px)'
+h.style.bottom=Math.random()*40+'%'
+document.body.appendChild(h)
+setTimeout(()=>h.remove(),3000)
+}
+}
+
+const oldOpenStartup=openStartup
+openStartup=function(){
+oldOpenStartup()
+setTimeout(spawnEdgeHearts,1300)
+}
+
+function spawnFlowers(){
+for(let i=0;i<15;i++){
+const f=document.createElement('div')
+f.className='flower'
+f.innerText=['🌸','🌷','🌹','💐'][Math.floor(Math.random()*4)]
+f.style.left=Math.random()*100+'%'
+f.style.bottom='0px'
+document.body.appendChild(f)
+setTimeout(()=>f.remove(),6000)
+}
+}
+
+function openMaps(){
+window.open("https://maps.app.goo.gl/J22o9L7YFTM8KzDV9","_blank")
+}
+
+
+const selectorEl = document.getElementById("selector");
+
+const particleWrap = document.createElement("div");
+particleWrap.style.width = "100%";
+particleWrap.style.height = "180px";
+particleWrap.style.marginTop = "25px";
+particleWrap.style.position = "relative";
+particleWrap.style.overflow = "hidden";
+selectorEl.after(particleWrap);
+
+const canvas = document.createElement("canvas");
+particleWrap.appendChild(canvas);
+const ctx = canvas.getContext("2d");
+
+function resize(){
+  canvas.width = particleWrap.clientWidth;
+  canvas.height = particleWrap.clientHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+const particles = [];
+const maxParticles = 500;
+
+class Particle{
+  constructor(x,y){
+    this.x = Math.random()*canvas.width;
+    this.y = canvas.height + Math.random()*60;
+    this.tx = x;
+    this.ty = y;
+    this.size = 2;
+    this.speed = 0.08;
+  }
+  move(){
+    this.x += (this.tx - this.x)*this.speed;
+    this.y += (this.ty - this.y)*this.speed;
+  }
+  draw(){
+    ctx.fillStyle = "#ffb6c1";
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function textToParticles(text){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  ctx.textAlign="center";
+  ctx.font="bold 64px 'cyrillic-ext'";
+  ctx.fillText(text, canvas.width/2, canvas.height/2 + 20);
+
+  const data = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+  particles.length=0;
+
+  for(let y=0;y<canvas.height;y+=5){
+    for(let x=0;x<canvas.width;x+=5){
+      const i=(y*canvas.width+x)*4;
+      if(data[i+3]>150 && particles.length<maxParticles){
+        particles.push(new Particle(x,y));
+      }
+    }
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.move();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+
+let stage = 0;
+function cycleText(){
+  textToParticles(stage===0 ? "WILLY" : "LOVE");
+  stage = (stage+1)%2;
+}
+
+cycleText();
+animate();
+setInterval(cycleText, 4000);
+
+
+const oldOpenEnvelope = openEnvelope;
+openEnvelope = function(n){
+  particleWrap.style.display="none";
+  oldOpenEnvelope(n);
+};
+
+const oldBack = back;
+back = function(){
+  particleWrap.style.display="block";
+  oldBack();
+};
+
+function showHeartParticles(){
+  canvas.classList.add("heart-pulse")
+  textToParticles("❤️")
+}
+
+const bgMusic = document.getElementById("bgMusic");
+let isPlaying = false;
+
+function toggleMusic(){
+  if(isPlaying){
+    bgMusic.pause();
+    isPlaying = false;
+  }else{
+    bgMusic.play();
+    isPlaying = true;
+  }
+}
+
+bgMusic.play();
+isPlaying = true;
+
+</script>
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
